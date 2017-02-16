@@ -6,5 +6,5 @@ class DummyHeatController(HeatControllerBase):
     """Dummy implementation for the heat controller"""
 
     def set_heat(self, downstairs, upstairs):
-        print("Setting downstairs to: " + downstairs)
-        print("Setting upstarts to: " + upstairs)
+        print("Setting downstairs to: " + str(downstairs))
+        print("Setting upstarts to: " + str(upstairs))
