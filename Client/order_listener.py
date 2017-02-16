@@ -24,7 +24,7 @@ class Worker(object):
     def on_connect(self, client_arg, userdata, flags, rc):
         print("Connected with result code "+str(rc))
 
-        self.client.subscribe("workshop/heating/setting")
+        self.client.subscribe("/workshop/heating/setting")
 
     def on_message(self, client_arg, userdata, msg):
         print(msg.topic+" "+str(msg.payload))
