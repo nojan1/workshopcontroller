@@ -1,10 +1,10 @@
 <?php
-define("MQTT_HOST", "");
-define("MQTT_PORT", "");
+define("MQTT_HOST", "127.0.0.1");
+define("MQTT_PORT", "7000");
 
 require("phpMQTT/phpMQTT.php");
 
-if(isset($_GET["downstairs"] && isset($_GET["upstairs"])){
+if(isset($_GET["downstairs"]) && isset($_GET["upstairs"])){
 
     $mqtt = new phpMQTT(MQTT_HOST, MQTT_PORT, "Heating Web");
     $response = "";
@@ -17,7 +17,7 @@ if(isset($_GET["downstairs"] && isset($_GET["upstairs"])){
         $mqtt->publish("/workshop/heating/setting",$command,0);
 
         $timeoutTime = new DateTime();
-        $timeoutTime->add(new DateInterval("P4S"));
+        $timeoutTime->add(new DateInterval("PT4S"));
 
         while($mqtt->proc() && $response == "" && new DateTime() < $timeoutTime){ }
 
@@ -30,7 +30,7 @@ if(isset($_GET["downstairs"] && isset($_GET["upstairs"])){
 }
 
 function handleConfirmation($topic, $msg){
-    global response;
+    global $response;
     $response = $msg;
 }
 ?>
@@ -53,13 +53,15 @@ function handleConfirmation($topic, $msg){
                     </td>
                 </tr>
                 <tr>
-                    <input type="submit" name="ok" value="Sätt värme">
+                    <td>
+                        <input type="submit" name="ok" value="Sätt värme">
+                    </td>
                 </tr>
             </table>
         </form>
 
         <?php
-            if(isset($response)){
+            if(!empty($response)){
                 echo "Svar från kommandokö: <i>$response</i>";
             }
         ?>
