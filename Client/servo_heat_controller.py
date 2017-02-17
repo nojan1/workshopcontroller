@@ -14,17 +14,23 @@ class ServoHeatController(HeatControllerBase):
         self.pwm.set_pwm_freq(60)
 
     def set_heat(self, downstairs, upstairs):
-        self.set_servo_pulse(1, self.pulse_from_temp(downstairs))
-        self.set_servo_pulse(2, self.pulse_from_temp(upstairs))
-    
-    def pulse_from_temp(self, temp):
-        if temp > config.HEAT_MAX:
-            corrected_temp = config.HEAT_MAX
-        elif temp < config.HEAT_MIN:
-            corrected_temp = config.HEAT_MIN
-        else:
-            corrected_temp = temp
+        tempDownstairs = self.correct_temperature(downstairs)
+        tempUpstairs = self.correct_temperature(upstairs)
 
+        self.set_servo_pulse(1, self.pulse_from_temp(tempDownstairs))
+        self.set_servo_pulse(2, self.pulse_from_temp(tempUpstairs))
+
+        return tempDownstairs, tempUpstairs
+    
+    def correct_temperature(self, uncorrected_temp):
+        if uncorrected_temp > config.HEAT_MAX:
+            return config.HEAT_MAX
+        elif uncorrected_temp < config.HEAT_MIN:
+            return config.HEAT_MIN
+        else:
+            return uncorrected_temp
+
+    def pulse_from_temp(self, corrected_temp):
         servo_range = SERVO_MAX - SERVO_MIN
         temp_percentage = (corrected_temp - config.HEAT_MIN) / (config.HEAT_MAX - config.HEAT_MIN)
 

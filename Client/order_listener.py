@@ -31,7 +31,9 @@ class Worker(object):
 
         try:
             parts = msg.payload.split(";")
-            self.heat_controller.set_heat(float(parts[0]), float(parts[1]))
+            downstairs, upstairs = self.heat_controller.set_heat(float(parts[0]), float(parts[1]))
+
+            self.client.publish("/workshop/heating/confirmation", str(downstairs) + ";" + str(upstairs))
         except:
             print("Error ocurred handling set request")
 

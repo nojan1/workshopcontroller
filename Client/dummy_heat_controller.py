@@ -8,3 +8,5 @@ class DummyHeatController(HeatControllerBase):
     def set_heat(self, downstairs, upstairs):
         print("Setting downstairs to: " + str(downstairs))
         print("Setting upstarts to: " + str(upstairs))
+
+        return downstairs, upstairs
