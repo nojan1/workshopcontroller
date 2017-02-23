@@ -3,6 +3,7 @@ Description=Heat Controller
 
 [Service]
 Type=simple
+RootDirectory=""
 ExecStart=<INSERT PATH>
 
 [Install]
