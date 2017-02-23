@@ -1,0 +1,9 @@
+[Unit]
+Description=Heat Controller
+
+[Service]
+Type=simple
+ExecStart=<INSERT PATH>
+
+[Install]
+WantedBy=multi-user.target
