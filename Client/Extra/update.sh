@@ -13,15 +13,15 @@ echo "Restoring files"
 mv ../config.py.backup ../config.py
 mv heatcontroller.service.backup heatcontroller.service
 
-if [ "$currentCommit" != "$(git rev-parse HEAD)" ]; then
-    echo "HEAD changed, restarting update"
-    exec ./update.sh
-fi
-
 echo "Setting executable bits"
 chmod +x ../submit_temperatures.py
 chmod +x update.sh
 chmod +x startup.sh
+
+if [ "$currentCommit" != "$(git rev-parse HEAD)" ]; then
+    echo "HEAD changed, restarting update"
+    exec ./update.sh
+fi
 
 echo "Recreating symlinks"
 rm "/etc/cron.hourly/10submit_temp"; ln -s "$(pwd)/../submit_temperatures.py" /etc/cron.hourly/10submit_temp
