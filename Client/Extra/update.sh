@@ -19,9 +19,9 @@ chmod +x ../submit_temperatures.py
 chmod +x update.sh
 chmod +x startup.sh
 
-rm "/etc/cron.hourly/10submit_temp" || ln -s "$(pwd)/../submit_temperatures.py" /etc/cron.hourly/10submit_temp
-rm "/etc/cron.hourly/11update" || ln -s "$(pwd)/update.sh" /etc/cron.hourly/11update
-rm "/etc/systemd/system/heatcontroller.service" || ln -s "$(pwd)/heatcontroller.service" /etc/systemd/system/heatcontroller.service
+rm "/etc/cron.hourly/10submit_temp"; ln -s "$(pwd)/../submit_temperatures.py" /etc/cron.hourly/10submit_temp
+rm "/etc/cron.hourly/11update"; ln -s "$(pwd)/update.sh" /etc/cron.hourly/11update
+rm "/etc/systemd/system/heatcontroller.service"; ln -s "$(pwd)/heatcontroller.service" /etc/systemd/system/heatcontroller.service
 
 systemctl daemon-reload
 
