@@ -11,7 +11,7 @@ git reset --hard origin/master
 mv ../config.py.backup ../config.py
 mv heatcontroller.service.backup heatcontroller.service
 
-if [ "$currentCommit" != "$(git rev-parse HEAD)"]; then
+if [ "$currentCommit" != "$(git rev-parse HEAD)" ]; then
     exec ./update.sh
 fi
 
