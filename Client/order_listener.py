@@ -30,12 +30,12 @@ class Worker(object):
         print(msg.topic+" "+str(msg.payload))
 
         try:
-            parts = msg.payload.split(";")
+            parts = msg.payload.decode('ascii').split(";")
             downstairs, upstairs = self.heat_controller.set_heat(float(parts[0]), float(parts[1]))
 
             self.client.publish("/workshop/heating/confirmation", str(downstairs) + ";" + str(upstairs))
-        except:
-            print("Error ocurred handling set request")
+        except Exception as e:
+            print("Error ocurred handling set request: '{0}'".format(e))
 
 
 if __name__ == "__main__":

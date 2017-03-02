@@ -43,4 +43,4 @@ class ServoHeatController(HeatControllerBase):
         pulse *= 1000
         pulse //= pulse_length
 
-        self.pwm.set_pwm(channel, 0, pulse)
+        self.pwm.set_pwm(channel, 0, int(pulse))

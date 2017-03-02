@@ -1,6 +1,6 @@
 <?php
 define("MQTT_HOST", "127.0.0.1");
-define("MQTT_PORT", "7000");
+define("MQTT_PORT", "1883");
 
 require("phpMQTT/phpMQTT.php");
 
