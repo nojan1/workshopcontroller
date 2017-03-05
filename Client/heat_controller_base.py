@@ -13,9 +13,9 @@ class HeatControllerBase(object):
             return config.HEAT_MIN
         else:
             return uncorrected_temp
-            
+
     def pulse_from_temp(self, corrected_temp):
         servo_range = config.SERVO_MAX - config.SERVO_MIN
         temp_percentage = (float(corrected_temp) - float(config.HEAT_MIN)) / (float(config.HEAT_MAX) - float(config.HEAT_MIN))
 
-        return int(config.SERVO_MIN + (float(servo_range) * temp_percentage))
+        return int(float(config.SERVO_MIN) + (float(servo_range) * temp_percentage))

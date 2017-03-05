@@ -13,7 +13,7 @@ HEAT_MAX = 24
 HEAT_MIN = 10
 
 # Configure min and max servo pulse lengths
-SERVO_MIN = 150  # Min pulse length out of 4096
+SERVO_MIN = 200  # Min pulse length out of 4096
 SERVO_MAX = 600  # Max pulse length out of 4096
 
 #Should a fake heating controler be used
