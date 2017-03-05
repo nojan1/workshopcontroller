@@ -1,5 +1,6 @@
 import paho.mqtt.client as mqtt
 import config
+import traceback
 
 from dummy_heat_controller import *
 
@@ -36,7 +37,11 @@ class Worker(object):
             self.client.publish("/workshop/heating/confirmation", str(downstairs) + ";" + str(upstairs))
         except Exception as e:
             print("Error ocurred handling set request: '{0}'".format(e))
+            traceback.print_exc()
 
 
 if __name__ == "__main__":
-    Worker().run()
+    try:
+        Worker().run()
+    except KeyboardInterrupt:
+        pass
