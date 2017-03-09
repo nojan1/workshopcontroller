@@ -1,4 +1,5 @@
 import config
+import time
 from heat_controller_base import HeatControllerBase
 from Adafruit_PCA9685 import PCA9685
 
@@ -20,6 +21,7 @@ class ServoHeatController(HeatControllerBase):
         print("Setting upstarts to: {0}, pulse: {1}".format(corrected_upstairs, pulse_upstairs))
 
         self.set_servo_pulse(0, pulse_downstairs)
+        time.sleep(0.1)
         self.set_servo_pulse(1, pulse_upstairs)
 
         return corrected_downstairs, corrected_upstairs

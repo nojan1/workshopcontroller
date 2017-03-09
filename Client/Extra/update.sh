@@ -2,7 +2,6 @@
 
 echo "Backing up files"
 cp ../config.py ../config.py.backup
-cp heatcontroller.service heatcontroller.service.backup
 
 currentCommit=$(git rev-parse HEAD)
 
@@ -11,7 +10,11 @@ git reset --hard origin/master
 
 echo "Restoring files"
 mv ../config.py.backup ../config.py
-mv heatcontroller.service.backup heatcontroller.service
+
+echo "Setting paths for service"
+path=$(pwd)
+sed -i "s|<WORKPATH>|$path|" heatcontroller.service
+sed -i "s|<EXECSTART>|$path/startup.sh|" heatcontroller.service
 
 echo "Setting executable bits"
 chmod +x ../submit_temperatures.py
@@ -20,7 +23,12 @@ chmod +x startup.sh
 
 if [ "$currentCommit" != "$(git rev-parse HEAD)" ]; then
     echo "HEAD changed, restarting update"
-    exec ./update.sh
+
+    if [ "$1" == "-norestart" ]; then
+        exec ./update.sh
+    else
+        exec ./update.sh -restart
+    fi
 fi
 
 echo "Recreating symlinks"
@@ -31,7 +39,7 @@ rm "/etc/systemd/system/heatcontroller.service"; ln -s "$(pwd)/heatcontroller.se
 echo "Reloading daemons"
 systemctl daemon-reload
 
-if [ "$1" != "-norestart" ]; then
+if [ "$1" == "-restart" ]; then
     echo "Restarting heatcontroller service"
     systemctl restart heatcontroller
 fi

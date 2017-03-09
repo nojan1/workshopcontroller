@@ -3,8 +3,8 @@ Description=Heat Controller
 
 [Service]
 Type=simple
-WorkingDirectory=""
-ExecStart=<INSERT PATH>
+WorkingDirectory="<WORKPATH>"
+ExecStart=<EXECSTART>
 
 [Install]
 WantedBy=multi-user.target
